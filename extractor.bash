@@ -14,8 +14,8 @@ VAR=0
 
 for x in $DATA
 do
-header+=`echo $x | cut -f1 -d'='` 
-header+='\t'
+    header+=`echo $x | cut -f1 -d'='` 
+    header+='\t'
 done
 header+="Model\t"$NAME
 echo -e  $header
@@ -23,25 +23,25 @@ echo -e  $header
 
 for i in ${@:2}
 do
-valuer=""
-METRICS=""
-VALUE_LINE=`grep "$1" $i`
-DATA=`grep "iterationvars2" $i | sed 's/[,$]//g' | cut -f2 -d'"' `
-VAL=$(echo "$VALUE_LINE" | awk  '{print  $2 "\t" $NF}')
+    valuer=""
+    METRICS=""
+    VALUE_LINE=`grep "$1" $i`
+    DATA=`grep "iterationvars2" $i | sed 's/[,$]//g' | cut -f2 -d'"' `
+    VAL=$(echo "$VALUE_LINE" | awk  '{print  $2 "\t" $NF}')
 
-while read DATA_LINE
-do
-for x in $DATA_LINE
-do
-METRICS+=`echo $x | cut -f2 -d'='` 
-METRICS+='\t'
-done
-done <<< $DATA
+    while read DATA_LINE
+    do
+	for x in $DATA_LINE
+	do
+	    METRICS+=`echo $x | cut -f2 -d'='` 
+	    METRICS+='\t'
+	done
+    done <<< $DATA
 
-while read "VALUE"
-do
-echo -e $METRICS "$VALUE"
-done <<< "$VAL"
+    while read "VALUE"
+    do
+	echo -e $METRICS "$VALUE"
+    done <<< "$VAL"
 
 
 done
